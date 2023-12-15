@@ -2,34 +2,51 @@
 using AjudaAiAPI.DTO;
 using AjudaAiAPI.Entity;
 using AjudaAiAPI.Infrastructure;
+using Dapper;
 
 namespace AjudaAiAPI.Repository
 {
     public class NgoRepository : Connection, INgoRepository
     {
-        public Task Add(NgoDTO ngo)
+        public async Task Add(NgoDTO ngo)
         {
-            throw new NotImplementedException();
+            string sql = @"INSERT INTO
+                           NGO (Name, Social, Headperson, Telephone, Email, Password, CityId, CausesId)
+                           VALUE (@Name, @Social, @Headperson, @Telephone, @Email, @Password, @CityId, @CausesId)";
+            await Execute(sql, ngo);
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            string sql = "DELETE FROM NGO WHERE Id = @Id";
+            await Execute(sql, new { id });
         }
 
-        public Task<IEnumerable<NgoEntity>> Get()
+        public async Task<IEnumerable<NgoEntity>> Get()
         {
-            throw new NotImplementedException();
+            string sql = "SELECT * FROM NGO";
+            return await GetConnection().QueryAsync<NgoEntity>(sql);
         }
 
-        public Task<NgoEntity> GetById(int id)
+        public async Task<NgoEntity> GetById(int id)
         {
-            throw new NotImplementedException();
+            string sql = @"SELECT * FROM NGO WHERE Id = @Id";
+            return await GetConnection().QueryFirstAsync<NgoEntity>(sql, new { id });
         }
 
-        public Task Update(NgoEntity ngo)
+        public async Task Update(NgoEntity ngo)
         {
-            throw new NotImplementedException();
+            string sql = @"UPDATE NGO
+                           SET Name = @Name,
+                               Social = @Social,
+                               Headperson = @Headperson,
+                               Telephone = @Telephone,
+                               Email = @Email,
+                               Password = @Password,
+                               CityId = @CityId,
+                               CausesId = @CausesId
+                           WHERE Id = @Id";
+            await Execute(sql, ngo);
         }
     }
 }
