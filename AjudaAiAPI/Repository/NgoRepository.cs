@@ -30,8 +30,18 @@ namespace AjudaAiAPI.Repository
 
         public async Task<NgoEntity> GetById(int id)
         {
-            string sql = @"SELECT * FROM NGO WHERE Id = @Id";
+            string sql = "SELECT * FROM NGO WHERE Id = @Id";
             return await GetConnection().QueryFirstAsync<NgoEntity>(sql, new { id });
+        }
+
+        public async Task<TokenDTO> Login(LoginDTO ngo)
+        {
+            string sql = "SELECT * FROM ngo WHERE Email = @Email AND Password = @Password";
+            NgoEntity ngoLogin = await GetConnection().QueryFirstAsync<NgoEntity>(sql, ngo);
+            return new TokenDTO
+            {
+                Token = Authentication.GenerateToken(ngoLogin)
+            };
         }
 
         public async Task Update(NgoEntity ngo)
