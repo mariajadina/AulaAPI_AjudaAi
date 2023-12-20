@@ -11,8 +11,8 @@ namespace AjudaAiAPI.Repository
         public async Task Add(NgoDTO ngo)
         {
             string sql = @"INSERT INTO
-                           NGO (Name, Social, Headperson, Telephone, Email, Password, CityId, CausesId)
-                           VALUE (@Name, @Social, @Headperson, @Telephone, @Email, @Password, @CityId, @CausesId)";
+                           NGO (Name, Social, Headperson, Telephone, Email, Password, CityId, CausesId, Role)
+                           VALUE (@Name, @Social, @Headperson, @Telephone, @Email, @Password, @CityId, @CausesId, @Role)";
             await Execute(sql, ngo);
         }
 
@@ -40,7 +40,8 @@ namespace AjudaAiAPI.Repository
             NgoEntity ngoLogin = await GetConnection().QueryFirstAsync<NgoEntity>(sql, ngo);
             return new TokenDTO
             {
-                Token = Authentication.GenerateToken(ngoLogin)
+                Token = Authentication.GenerateToken(ngoLogin),
+                Ngo = ngoLogin
             };
         }
 
@@ -54,7 +55,8 @@ namespace AjudaAiAPI.Repository
                                Email = @Email,
                                Password = @Password,
                                CityId = @CityId,
-                               CausesId = @CausesId
+                               CausesId = @CausesId,
+                               Role = @Role
                            WHERE Id = @Id";
             await Execute(sql, ngo);
         }

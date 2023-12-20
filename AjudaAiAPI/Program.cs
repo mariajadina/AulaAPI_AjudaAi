@@ -90,7 +90,7 @@ app.UseCors(x =>
 {
     x.AllowAnyOrigin();
     x.AllowAnyMethod();
-    x.AllowAnyOrigin();
+    x.AllowAnyHeader();
 });
 
 app.Run();

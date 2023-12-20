@@ -11,5 +11,6 @@
         public string Password { get; set; }
         public int CityId { get; set; }
         public int CausesId { get; set; }
+        public string Role { get; set; }
     }
 }

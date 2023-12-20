@@ -16,7 +16,8 @@ namespace AjudaAiAPI.Infrastructure
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, ngo.Name),
-                    new Claim(ClaimTypes.Email, ngo.Email)
+                    new Claim(ClaimTypes.Email, ngo.Email),
+                    new Claim(ClaimTypes.Role, ngo.Role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

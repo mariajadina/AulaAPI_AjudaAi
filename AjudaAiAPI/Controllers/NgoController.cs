@@ -17,15 +17,15 @@ namespace AjudaAiAPI.Controllers
             _ngoRepository = ngoRepository;
         }
 
-        [Authorize]
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Get()
         {
             return Ok(await _ngoRepository.Get());
         }
 
-        [Authorize]
         [HttpGet("{id}")]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(await _ngoRepository.GetById(id));
@@ -51,16 +51,16 @@ namespace AjudaAiAPI.Controllers
             }
         }
 
-        [Authorize]
         [HttpPut]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Update(NgoEntity ngo)
         {
             await _ngoRepository.Update(ngo);
             return Ok();
         }
 
-        [Authorize]
         [HttpDelete]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
             await _ngoRepository.Delete(id);
